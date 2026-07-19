@@ -1,0 +1,84 @@
+## ---------- .NET / Visual Studio ----------
+
+# Build results
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+[Ll]og/
+[Ll]ogs/
+x64/
+x86/
+build/
+bld/
+out/
+[Ww][Ii][Nn]32/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+
+# Visual Studio temporary/cache files
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.userprefs
+
+# Build logs
+*.binlog
+msbuild.log
+msbuild.err
+msbuild.wrn
+
+# Rider / JetBrains
+.idea/
+*.sln.iml
+
+# Visual Studio Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+## ---------- NuGet ----------
+*.nupkg
+*.snupkg
+**/[Pp]ackages/*
+!**/[Pp]ackages/build/
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+## ---------- Test / Coverage ----------
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+*.coverage
+*.coveragexml
+coverage*.json
+coverage*.xml
+coverage*.info
+TestResults/
+
+## ---------- App secrets / environment ----------
+# อย่า commit ความลับ (connection string production, API keys)
+appsettings.*.local.json
+secrets.json
+*.pfx
+*.key
+.env
+.env.*
+
+## ---------- OS files ----------
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.DS_Store
+
+## ---------- Misc ----------
+*.tmp
+*.cache
+_ReSharper*/
+*.[Rr]e[Ss]harper
+*.DotSettings.user

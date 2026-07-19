@@ -1,0 +1,41 @@
+services:
+  # ---------- ฐานข้อมูล PostgreSQL ----------
+  db:
+    image: postgres:17
+    container_name: studentapi-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: studentdb
+    ports:
+      # host:container — เครื่องเราต่อผ่าน 5433, ในคอนเทนเนอร์ยังเป็น 5432
+      - "5433:5432"
+    volumes:
+      # เก็บข้อมูลไว้แม้ลบ container (ข้อมูลไม่หาย)
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d studentdb"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # ---------- (ทางเลือก) ตัว API เอง ----------
+  # เปิดใช้เมื่ออยากรัน API ใน container ด้วย ตอนนี้ยัง comment ไว้
+  # เพื่อให้เรารัน API จาก Visual Studio ระหว่างเรียนได้สะดวกกว่า
+  # api:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   container_name: studentapi-app
+  #   depends_on:
+  #     db:
+  #       condition: service_healthy
+  #   environment:
+  #     # ใน network ของ compose ให้ใช้ชื่อ service "db" แทน localhost
+  #     ConnectionStrings__DefaultConnection: "Host=db;Port=5432;Database=studentdb;Username=postgres;Password=postgres"
+  #   ports:
+  #     - "8080:8080"
+
+volumes:
+  pgdata:
