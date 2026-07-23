@@ -17,10 +17,11 @@ namespace StudentAPI.Controllers
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Student>>> GetAll(
-            [FromQuery] string? studentNo,
-            [FromQuery] string? studentName)
+            [FromQuery] string? search,
+            [FromQuery] StudentStatus? status,
+            [FromQuery] string? level)
         {
-            var students = await _service.GetAllAsync(studentNo, studentName);
+            var students = await _service.GetAllAsync(search, status, level);
             return Ok(students);
         }
 

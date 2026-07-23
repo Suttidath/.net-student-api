@@ -5,8 +5,8 @@ namespace StudentAPI.Services
     // สัญญา (interface) ของ Student Service — รวม CRUD ทั้งหมดไว้ที่นี่
     public interface IStudentService
     {
-        // อ่านทั้งหมด (รองรับการค้นแบบบางส่วนด้วย studentNo / studentName)
-        Task<IEnumerable<Student>> GetAllAsync(string? studentNo, string? studentName);
+        // อ่านทั้งหมด (search = ค้นทั้ง studentNo และ studentName ในช่องเดียว, filter ด้วย status / level)
+        Task<IEnumerable<Student>> GetAllAsync(string? search, StudentStatus? status, string? level);
 
         // อ่านตาม id
         Task<StudentServiceResult<Student>> GetByIdAsync(int id);

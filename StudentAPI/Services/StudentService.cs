@@ -16,15 +16,25 @@ namespace StudentAPI.Services
         }
 
         // GET ทั้งหมด — ค้นแบบบางส่วน + ไม่สนตัวพิมพ์เล็ก/ใหญ่ (ILike ของ PostgreSQL)
-        public async Task<IEnumerable<Student>> GetAllAsync(string? studentNo, string? studentName)
+        // search: ช่องเดียว ค้นทั้ง StudentNo และ StudentName (OR)
+        // status / level: ตัวกรองเพิ่มเติม
+        public async Task<IEnumerable<Student>> GetAllAsync(string? search, StudentStatus? status, string? level)
         {
             var query = _db.Students.AsNoTracking();
 
-            if (!string.IsNullOrWhiteSpace(studentNo))
-                query = query.Where(s => EF.Functions.ILike(s.StudentNo, $"%{studentNo.Trim()}%"));
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                var pattern = $"%{search.Trim()}%";
+                query = query.Where(s =>
+                    EF.Functions.ILike(s.StudentNo, pattern) ||
+                    EF.Functions.ILike(s.StudentName, pattern));
+            }
 
-            if (!string.IsNullOrWhiteSpace(studentName))
-                query = query.Where(s => EF.Functions.ILike(s.StudentName, $"%{studentName.Trim()}%"));
+            if (status.HasValue)
+                query = query.Where(s => s.Status == status.Value);
+
+            if (!string.IsNullOrWhiteSpace(level))
+                query = query.Where(s => EF.Functions.ILike(s.Level, $"%{level.Trim()}%"));
 
             return await query.OrderBy(s => s.Id).ToListAsync();
         }
